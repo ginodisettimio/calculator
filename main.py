@@ -1,4 +1,4 @@
-from operations import addition, subtraction, division, multiplication, power, history
+from core.operations import *
 
 
 def display_menu():

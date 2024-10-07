@@ -1,4 +1,4 @@
-from utils import clear_console
+from helpers.utils import clear_console
 
 results = []
 
@@ -70,3 +70,5 @@ def history():
         print('Operaciones realizadas:')
         for result in results:
             print(result)
+
+_all__ = [addition, subtraction, division, multiplication, power, history]
