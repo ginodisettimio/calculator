@@ -3,3 +3,6 @@
 
 #Virtual env
 env/*
+
+#Operations.json
+operations.json

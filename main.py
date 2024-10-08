@@ -1,16 +1,22 @@
+from termcolor import colored
+
 from core.operations import *
+from helpers.file_helpers import read_json_file
+from config import constants
+from helpers.console_helpers import clear_console
 
 
 def display_menu():
-    print('\nCALCULADORA')
-    print('\n1.Suma \n2.Resta \n3.Division \n4.Multiplicación \n5.Potencia \n6.Mostrar historial')
+    print(colored('\nCALCULADORA', 'yellow'))
+    print(colored('\n1.Suma \n2.Resta \n3.Division \n4.Multiplicación \n5.Potencia \n6.Mostrar historial', "light_cyan"))
 
 
 def main():
-    results = []
+    results = read_json_file(constants.OPERATIONS_PATH)
+    clear_console()
     while True:
         display_menu()
-        operation = input('\nElija el tipo de operación = ')
+        operation = input(colored('\nElija el tipo de operación = ', "green"))
         match operation:
             case '1': addition(results)
             case '2': subtraction(results)
