@@ -7,17 +7,17 @@ def display_menu():
 
 
 def main():
-    results = [] 
+    results = []
     while True:
         display_menu()
         operation = input('\nElija el tipo de operación = ')
         match operation:
-            case '1': addition()
-            case '2': subtraction()
-            case '3': division()
-            case '4': multiplication()
-            case '5': power()
-            case '6': history()
+            case '1': addition(results)
+            case '2': subtraction(results)
+            case '3': division(results)
+            case '4': multiplication(results)
+            case '5': power(results)
+            case '6': history(results)
             case _: break
 
 

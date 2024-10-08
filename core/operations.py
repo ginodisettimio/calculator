@@ -2,6 +2,7 @@ from helpers.utils import clear_console
 
 results = []
 
+
 def addition():
     clear_console()
     try:
@@ -60,6 +61,8 @@ def power():
         return print(f'{result}')
     except ValueError:
         print('Numero invalido')
+    except OverflowError:
+        print('Entrada invalida')
 
 
 def history():
@@ -70,5 +73,6 @@ def history():
         print('Operaciones realizadas:')
         for result in results:
             print(result)
+
 
 _all__ = [addition, subtraction, division, multiplication, power, history]
