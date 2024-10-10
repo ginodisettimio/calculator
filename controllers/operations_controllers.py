@@ -45,6 +45,8 @@ class Operations_Controllers:
                     cls.power()
                 case '6':
                     cls.history()
+                case '7':
+                    cls.delete_history()
                 case _:
                     break
 
@@ -112,9 +114,15 @@ class Operations_Controllers:
     @classmethod
     def history(cls):
         console.clear()
+        Result.read()
         if not Result.results:
             print('No se han realizado operaciones')
         else:
             cprint('Operaciones realizadas:', "black", "on_yellow")
             for result in Result.results:
                 print(result)
+
+    @classmethod
+    def delete_history(cls):
+        console.clear()
+        Result.delete()

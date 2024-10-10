@@ -1,7 +1,4 @@
 import json
-from config import constants
-
-results = []
 
 
 def write_json_file(path: str, content: list) -> None:
@@ -13,5 +10,15 @@ def read_json_file(path: str) -> list:
     try:
         with open(path, 'r') as file:
             return json.load(file)
+    except FileNotFoundError:
+        return []
+    except json.decoder.JSONDecodeError:
+        return []
+
+
+def del_json_file(path: str) -> list[None]:
+    try:
+        with open(path, 'w') as file:
+            return []
     except FileNotFoundError:
         return []
