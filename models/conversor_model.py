@@ -1,6 +1,8 @@
+from termcolor import cprint
+
 from models.base_model import Base
 from config import constants
-
+from helpers.file_helpers import write_json_file
 
 class Conversor(Base):
     filename = constants.CONVERSOR_PATH
@@ -10,26 +12,38 @@ class Conversor(Base):
         self.convert = convert
         self._result = result
 
+    results = []
+
+    @classmethod
+    def add_numbers(cls, count, result):
+        Conversor.results.append(count)
+        Conversor.write()
+        cprint(f'Resultado: {result}', "magenta")
+
+    @staticmethod
+    def write():
+        write_json_file(Conversor.filename, Conversor.results)
+
     def convert_temperature(number1: float, from_unit: str, convert: str) -> float:
-        if from_unit == 'Fahrenheit':
-            if convert == 'Celsius':
+        if from_unit == 'F':
+            if convert == 'C':
                 result = (number1 - 32) * 5 / 9
                 return result
-            elif convert == 'Kelvin':
+            elif convert == 'K':
                 result = (number1 - 32) * 5 / 9 + 273.15
                 return result
-        elif from_unit == 'Celsius':
-            if convert == 'Fahrenheit':
+        elif from_unit == 'C':
+            if convert == 'F':
                 result = (number1 * 9 / 5) + 32
                 return result
-            elif convert == 'Kelvin':
+            elif convert == 'K':
                 result = number1 + 273.15
                 return result
-        elif from_unit == 'Kelvin':
-            if convert == 'Celsius':
+        elif from_unit == 'K':
+            if convert == 'C':
                 result = number1 - 273.15
                 return result
-            elif convert == 'Fahrenheit':
+            elif convert == 'F':
                 result = (number1 - 273.15) * 9 / 5 + 32
                 return result
         return None

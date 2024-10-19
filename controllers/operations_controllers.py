@@ -8,7 +8,7 @@ from models.base_model import Base
 import helpers.console_helpers as console
 
 
-class Operations_Controllers:
+class OperationsControllers:
 
     @staticmethod
     def get_all_results() -> List[Base]:
@@ -17,10 +17,8 @@ class Operations_Controllers:
     @staticmethod
     def get_numbers():
         try:
-            number1 = float(
-                input(colored('Ingrese primer operando = ', "blue")))
-            number2 = float(
-                input(colored('Ingrese segundo operando = ', "light_red")))
+            number1 = float(input(colored('Ingrese primer operando = ', "blue")))
+            number2 = float(input(colored('Ingrese segundo operando = ', "light_red")))
             return number1, number2
         except ValueError:
             cprint('Número inválido', 'white', 'on_red')
@@ -67,6 +65,8 @@ class Operations_Controllers:
         Conversor.delete()
         Arithmetic.results.clear()
         Arithmetic.delete()
+        cprint(f'Borrado exitoso', 'light_green')
+
 
     @classmethod
     def arithmetics_operations(cls):
@@ -143,6 +143,8 @@ class Operations_Controllers:
         try:
             number1, number2 = cls.get_numbers()
             result = Arithmetic.to_the_power_of(number1, number2)
+            if result == None:
+                return cprint('Número demasiado grande', 'white', 'on_red')
             count = f'{number1} ^ {number2} = {result}'
             Arithmetic.add_numbers(count, result)
         except TypeError:
@@ -153,8 +155,7 @@ class Operations_Controllers:
         console.clear()
         while True:
             console.display_conversor()
-            choose = input(
-                colored('\nElija el tipo de conversión = ', "white"))
+            choose = input(colored('\nElija el tipo de conversión = ', "white"))
             match choose:
                 case '1':
                     cls.fahrenheit()
@@ -173,9 +174,9 @@ class Operations_Controllers:
         try:
             number1 = float(input(colored('Ingrese temperatura en Fahrenheit = ', 'light_yellow')))
             convert = input(colored('Elija unidad a convertir: Celsius o Kelvin: ', 'light_blue'))
-            result = Conversor.convert_temperature(number1, 'Fahrenheit', convert.title())
+            result = Conversor.convert_temperature(number1, 'F', convert.title())
             if result is not None:
-                count = f'{number1}°Fahrenheit equivale a {result}°{convert.title()}'
+                count = f'{number1}°F equivale a {result}°{convert.title()}'
                 Conversor.add_numbers(count, result)
             else:
                 cprint("Unidad no válida. Por favor elija Celsius o Kelvin.", 'white', 'on_light_red')
@@ -187,10 +188,9 @@ class Operations_Controllers:
         try:
             number1 = float(input(colored('Ingrese temperatura en Celsius = ', 'light_yellow')))
             convert = input(colored('Elija unidad a convertir: Fahrenheit o Kelvin: ', 'light_blue'))
-            result = Conversor.convert_temperature(
-                number1, 'Celsius', convert.title())
+            result = Conversor.convert_temperature(number1, 'C', convert.title())
             if result is not None:
-                count = f'{number1}°Celsius equivale a {result}°{convert.title()}'
+                count = f'{number1}°C equivale a {result}°{convert.title()}'
                 Conversor.add_numbers(count, result)
             else:
                 cprint("Unidad no válida. Por favor elija Fahrenheit o Kelvin.", 'white', 'on_light_red')
@@ -202,9 +202,9 @@ class Operations_Controllers:
         try:
             number1 = float(input(colored('Ingrese temperatura en Kelvin = ', 'light_yellow')))
             convert = input(colored('Elija unidad a convertir: Celsius o Fahrenheit: ', 'light_blue'))
-            result = Conversor.convert_temperature(number1, 'Kelvin', convert.title())
+            result = Conversor.convert_temperature(number1, 'K', convert.title())
             if result is not None:
-                count = f'{number1}°Kelvin equivale a {result}°{convert.title()}'
+                count = f'{number1}°K equivale a {result}°{convert.title()}'
                 Conversor.add_numbers(count, result)
             else:
                 cprint("Unidad no válida. Por favor elija Celsius o Fahrenheit.", 'white', 'on_light_red')
@@ -216,7 +216,8 @@ class Operations_Controllers:
         if "equivale a" in result_string:
             result_value = float(result_string.split('equivale a')[1].strip().split('°')[0])
             rounded_result = round(result_value, decimal)
-            return result_string.split('equivale a')[0] + f'equivale a {rounded_result}°'
+            unit = result_string.strip('equivale a')[-1]
+            return result_string.split('equivale a')[0] + f'equivale a {rounded_result}°{unit}'
         else:
             result_value = float(result_string.split('=')[-1].strip())
             rounded_result = round(result_value, decimal)

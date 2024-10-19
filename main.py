@@ -1,8 +1,8 @@
-from controllers.operations_controllers import Operations_Controllers
+from controllers.operations_controllers import OperationsControllers
 
 
 def main():
-    Operations_Controllers.start()
+    OperationsControllers.start()
 
 
 if __name__ == '__main__':

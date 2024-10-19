@@ -1,16 +1,20 @@
-from helpers.file_helpers import write_json_file, read_json_file, del_json_file
 from typing import List
-from abc import ABC
-from termcolor import cprint
+from abc import ABC, abstractmethod
+
+from helpers.file_helpers import read_json_file, del_json_file
 
 
 class Base(ABC):
     filename = ''
     results: List['Base'] = []
 
-    @classmethod
+    @abstractmethod
+    def add_numbers():
+        pass
+
+    @abstractmethod
     def write(cls):
-        write_json_file(cls.filename, [result for result in cls.results])
+        pass
 
     @classmethod
     def read(cls):
@@ -19,12 +23,3 @@ class Base(ABC):
     @classmethod
     def delete(cls):
         del_json_file(cls.filename)
-        
-    @classmethod
-    def add_numbers(cls, count, result):
-        if count not in cls.results:
-            cls.results.append(count)
-            cls.write()
-            cprint(f'Resultado: {result}', "magenta")
-        else:
-            cprint('Resultado ya existe en el historial.', 'yellow')
